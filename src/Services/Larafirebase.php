@@ -20,6 +20,8 @@ class Larafirebase
 
     private $token;
 
+    private $tokens;
+
     private $topic;
 
     private $fromRaw;
@@ -61,6 +63,13 @@ class Larafirebase
         return $this;
     }
 
+    public function withTokens(array $tokens)
+    {
+        $this->tokens = $tokens;
+
+        return $this;
+    }
+
     public function withTopic($topic)
     {
         $this->topic = $topic;
@@ -93,6 +102,11 @@ class Larafirebase
 
         if($this->token) {
             $payload['message']['token'] = $this->token;
+        }
+
+        if($this->tokens) {
+            unset($payload['message']['token']);
+            $payload['message']['tokens'] = $this->tokens;
         }
 
         if($this->topic) {
